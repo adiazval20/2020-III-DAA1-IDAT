@@ -1,0 +1,17 @@
+0:0:0:0:0:0:0:1 - - [26/Oct/2020:19:44:32 -0500] "GET /MiPrimerServlet HTTP/1.1" 302 - http-bio-8080-exec-1 0
+0:0:0:0:0:0:0:1 - - [26/Oct/2020:19:44:33 -0500] "GET /MiPrimerServlet/ HTTP/1.1" 500 2993 http-bio-8080-exec-3 662
+0:0:0:0:0:0:0:1 - - [26/Oct/2020:19:46:15 -0500] "GET /MiPrimerServlet HTTP/1.1" 302 - http-bio-8080-exec-1 0
+0:0:0:0:0:0:0:1 - - [26/Oct/2020:19:46:15 -0500] "GET /MiPrimerServlet/ HTTP/1.1" 500 2993 http-bio-8080-exec-3 53
+0:0:0:0:0:0:0:1 - - [26/Oct/2020:19:48:46 -0500] "GET /MiPrimerServlet HTTP/1.1" 302 - http-bio-8080-exec-2 0
+0:0:0:0:0:0:0:1 - - [26/Oct/2020:19:48:46 -0500] "GET /MiPrimerServlet/ HTTP/1.1" 200 52 http-bio-8080-exec-3 60
+0:0:0:0:0:0:0:1 - - [26/Oct/2020:19:48:58 -0500] "GET /MiPrimerServlet/ HTTP/1.1" 200 52 http-bio-8080-exec-4 2
+0:0:0:0:0:0:0:1 - - [26/Oct/2020:19:48:58 -0500] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-5 0
+0:0:0:0:0:0:0:1 - - [26/Oct/2020:19:49:38 -0500] "GET /MiPrimerServlet/DemoServlet HTTP/1.1" 200 16 http-bio-8080-exec-6 4
+127.0.0.1 - - [26/Oct/2020:20:48:29 -0500] "HEAD /netbeans-tomcat-status-test HTTP/1.1" 404 - http-bio-8080-exec-1 0
+127.0.0.1 - - [26/Oct/2020:20:48:29 -0500] "HEAD /netbeans-tomcat-status-test HTTP/1.1" 404 - http-bio-8080-exec-2 0
+127.0.0.1 - - [26/Oct/2020:20:48:29 -0500] "HEAD /netbeans-tomcat-status-test HTTP/1.1" 404 - http-bio-8080-exec-3 0
+127.0.0.1 - - [26/Oct/2020:20:48:29 -0500] "HEAD /netbeans-tomcat-status-test HTTP/1.1" 404 - http-bio-8080-exec-4 0
+127.0.0.1 - - [26/Oct/2020:20:48:29 -0500] "GET /manager/text/list HTTP/1.1" 404 - http-bio-8080-exec-5 0
+127.0.0.1 - - [26/Oct/2020:20:48:32 -0500] "GET /manager/text/list HTTP/1.1" 404 - http-bio-8080-exec-6 0
+127.0.0.1 - - [26/Oct/2020:20:48:35 -0500] "GET /manager/text/list HTTP/1.1" 404 - http-bio-8080-exec-7 0
+127.0.0.1 - - [26/Oct/2020:20:48:38 -0500] "GET /manager/text/list HTTP/1.1" 404 - http-bio-8080-exec-8 0
