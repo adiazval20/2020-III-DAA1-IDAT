@@ -15,7 +15,7 @@
             <br>
             <h2>Mantenimiento de Personas</h2>
             <br>
-            <form action="/persona" method="POST">
+            <form action="persona" method="POST">
                 <div class="row form-group">
                     <label for="txtApellidoPaterno" class="col-form-label col-sm-3">Apellido Paterno:</label>
                     <div class="col-sm-6">
