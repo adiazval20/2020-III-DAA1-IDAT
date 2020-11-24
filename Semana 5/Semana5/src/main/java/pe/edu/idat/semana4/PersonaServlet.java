@@ -72,7 +72,6 @@ public class PersonaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id;
-        persona = new Persona();
 
         String accion = req.getParameter("accion");
         accion = (accion == null ? "" : accion);
@@ -91,10 +90,19 @@ public class PersonaServlet extends HttpServlet {
                         });
                 if (optPersona.isPresent()) {
                     persona = optPersona.get();
+                } else {
+                    persona = new Persona();
                 }
 
                 break;
             case "eliminar":
+                id = Integer.parseInt(req.getParameter("id"));
+                personas = personas.stream()
+                        .filter(p -> p.getId() != id)
+                        .collect(Collectors.toList());
+                break;
+            case "cancelar":
+                persona = new Persona();
                 break;
         }
 

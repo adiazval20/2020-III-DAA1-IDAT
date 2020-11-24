@@ -8,7 +8,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Mantenimiento de Personas</title>
         <!--Estilos externos-->
-        <link rel="stylesheet" href="bootstrap-4.5.3/css/bootstrap.css"/>
+        <link rel="stylesheet" href="assets/bootstrap-4.5.3/css/bootstrap.css"/>
+        <link rel="stylesheet" href="assets/toastr/toastr.css"/>
     </head>
     <body>
         <div class="container">
@@ -43,7 +44,8 @@
                 </div>
                 <div class="row form-group">
                     <div class="col-sm-9 offset-sm-3">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="submit" class="btn btn-sm btn-primary" onClick="return validar();">Guardar</button>
+                        <a href="${pageContext.request.contextPath}/persona?accion=cancelar" class="btn btn-sm btn-light">Cancelar</a>
                     </div>
                 </div>
             </form>
@@ -86,5 +88,10 @@
                 </div>
             </div>
         </div>
+        <!--Scripts externos-->
+        <script src="assets/jquery/jquery-3.5.1.js"></script>
+        <script src="assets/toastr/toastr.js"></script>
+        <!--Scripts propios-->
+        <script src="js/persona.js"></script>
     </body>
 </html>
