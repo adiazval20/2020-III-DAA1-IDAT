@@ -100,6 +100,7 @@ public class PersonaServlet extends HttpServlet {
                 personas = personas.stream()
                         .filter(p -> p.getId() != id)
                         .collect(Collectors.toList());
+                persona = new Persona();
                 break;
             case "cancelar":
                 persona = new Persona();
@@ -111,6 +112,7 @@ public class PersonaServlet extends HttpServlet {
 
     private void forwardPage(HttpServletRequest req, HttpServletResponse resp, String page) throws ServletException, IOException {
         resp.setContentType("text/html");
+        resp.setCharacterEncoding("UTF-8");
 
         req.setAttribute("personas", this.personas);
         req.setAttribute("persona", this.persona);
