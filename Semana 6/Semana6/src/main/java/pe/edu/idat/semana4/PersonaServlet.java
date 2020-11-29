@@ -105,6 +105,10 @@ public class PersonaServlet extends HttpServlet {
             case "cancelar":
                 persona = new Persona();
                 break;
+            case "eliminarTodos":
+                persona = new Persona();
+                personas.clear();
+                break;
         }
 
         forwardPage(req, resp, "persona.jsp");

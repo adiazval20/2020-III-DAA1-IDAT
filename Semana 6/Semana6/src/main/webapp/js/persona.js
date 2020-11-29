@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#mdlEliminar').modal({
+    $('#mdlConfirmar').modal({
         show: false
     });
 
@@ -47,6 +47,27 @@ function eliminar(e) {
         funConfirmar = undefined;
     }
 
-    $('#mdlEliminar').modal('show');
+    $('#mdlConfirmar label[for="chkConfirmar"]::before').css({
+        display: 'none',
+    });
+    $('#mdlConfirmar').modal('show');
+    return false;
+}
+
+function eliminarTodos(e) {
+    funConfirmar = function () {
+        if ($('#chkConfirmar').prop('checked')) {
+            document.location = e.target.href;
+            funConfirmar = undefined;
+        } else {
+            toastr.warning('Debe marcar el check de confirmación', 'Alerta');
+        }
+    }
+
+    console.log($('#mdlConfirmar label[for="chkConfirmar"]::before'));
+    $('#mdlConfirmar label[for="chkConfirmar"]::before').css({
+        display: 'block',
+    });
+    $('#mdlConfirmar').modal('show');
     return false;
 }
