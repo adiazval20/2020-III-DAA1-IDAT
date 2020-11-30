@@ -47,9 +47,7 @@ function eliminar(e) {
         funConfirmar = undefined;
     }
 
-    $('#mdlConfirmar label[for="chkConfirmar"]::before').css({
-        display: 'none',
-    });
+    $('#mdlConfirmar label[for="chkConfirmar"]').removeClass('custom-control-label');
     $('#mdlConfirmar').modal('show');
     return false;
 }
@@ -64,10 +62,7 @@ function eliminarTodos(e) {
         }
     }
 
-    console.log($('#mdlConfirmar label[for="chkConfirmar"]::before'));
-    $('#mdlConfirmar label[for="chkConfirmar"]::before').css({
-        display: 'block',
-    });
+    $('#mdlConfirmar label[for="chkConfirmar"]').addClass('custom-control-label');
     $('#mdlConfirmar').modal('show');
     return false;
 }
