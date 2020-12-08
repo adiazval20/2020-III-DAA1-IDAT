@@ -1,10 +1,14 @@
 $(document).ready(function () {
-    // fetch()
+    listar();
+});
 
+function listar() {
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/Semana4/usuario",
         success: function (response) {
+            console.log(response);
+
             $tbody = $('#tblUsuarios tbody');
             response.forEach((p, i) => {
                 var tr = '<tr>';
@@ -23,4 +27,4 @@ $(document).ready(function () {
             });
         }
     });
-});
+}

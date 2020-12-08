@@ -11,24 +11,60 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import pe.edu.idat.semana4.entity.Persona;
 import pe.edu.idat.semana4.entity.Usuario;
+import pe.edu.idat.semana4.repository.UsuarioRepository;
 
 @WebServlet(name = "UsuarioServlet", urlPatterns = "/usuario")
 public class UsuarioServlet extends HttpServlet {
 
+    private UsuarioRepository repo;
+
+    @Override
+    public void init() throws ServletException {
+        repo = UsuarioRepository.getInstance();
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        configResponse(resp);
+
+        int id = Integer.parseInt(req.getParameter("id"));
+        Usuario usuario = repo.find(id);
+        
+        String apellidoPaterno = req.getParameter("apellidoPaterno");
+        String apellidoMaterno = req.getParameter("apellidoMaterno");
+        String nombres = req.getParameter("nombres");
+        String fechaNacimiento = req.getParameter("fechaNacimiento");
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        
+        usuario.setApellidoPaterno(apellidoPaterno);
+        usuario.setApellidoMaterno(apellidoMaterno);
+        usuario.setNombres(nombres);
+        usuario.setFechaNacimiento(fechaNacimiento);
+        usuario.setUsername(username);
+        usuario.setPassword(password);
+        
+        usuario = repo.save(usuario);
+        
+        Gson gson = new Gson();
+        String json = gson.toJson(usuario);
+        PrintWriter pw = resp.getWriter();
+        pw.println(json);
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        configResponse(resp);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(repo.list());
+        PrintWriter pw = resp.getWriter();
+        pw.println(json);
+    }
+
+    private void configResponse(HttpServletResponse resp) {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         resp.addHeader("Access-Control-Allow-Origin", "*");
-
-        Gson gson = new Gson();
-        
-        ArrayList<Usuario> usuarios = new ArrayList<>();
-        usuarios.add(new Usuario(1, "Perez", "Rojas", "Miguel", "01/01/2000", "jrojas", "123456"));
-        usuarios.add(new Usuario(2, "Díaz", "Cabrejos", "Alejandra", "01/01/1998", "dcabrejos", "admin"));
-
-        String json = gson.toJson(usuarios);
-        PrintWriter pw = resp.getWriter();
-        pw.println(json);
     }
 }
