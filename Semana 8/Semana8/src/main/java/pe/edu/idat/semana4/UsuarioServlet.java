@@ -66,5 +66,7 @@ public class UsuarioServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         resp.addHeader("Access-Control-Allow-Origin", "*");
+        resp.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+        resp.addHeader("Access-Control-Allow-Headers", "Content-Type");
     }
 }

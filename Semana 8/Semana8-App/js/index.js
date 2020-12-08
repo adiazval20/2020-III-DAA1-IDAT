@@ -1,14 +1,18 @@
+var path = "http://localhost:8080/Semana4/usuario";
+
 $(document).ready(function () {
     listar();
+
+    $('#btnGuardar').on('click', function (e) {
+        guardar();
+    });
 });
 
 function listar() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/Semana4/usuario",
+        url: path,
         success: function (response) {
-            console.log(response);
-
             $tbody = $('#tblUsuarios tbody');
             response.forEach((p, i) => {
                 var tr = '<tr>';
@@ -25,6 +29,32 @@ function listar() {
                 tr += '</tr>';
                 $tbody.append(tr);
             });
+        }
+    });
+}
+
+function guardar() {
+    var id = 0;
+    var usuario = {
+        id: id,
+        apellidoPaterno: $('#txtApellidoPaterno').val(),
+        apellidoMaterno: $('#txtApellidoMaterno').val(),
+        nombres: $('#txtNombres').val(),
+        fechaNacimiento: $('#txtFechaNacimiento').val(),
+        username: $('#txtUsername').val(),
+        password: $('#txtPassword').val(),
+    }
+
+    console.log(usuario);
+
+    $.ajax({
+        type: "POST",
+        url: path,
+        data: usuario,
+        dataType: "json",
+        success: function (response) {
+            toastr.success("Registro guardado correctamente");
+            listar();
         }
     });
 }
