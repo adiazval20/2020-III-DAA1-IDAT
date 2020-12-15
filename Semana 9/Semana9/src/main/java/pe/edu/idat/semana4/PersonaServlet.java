@@ -34,7 +34,7 @@ public class PersonaServlet extends HttpServlet {
             final int personaId = Integer.parseInt(req.getParameter("id"));
 
             Optional<Persona> optPersona = personas.stream()
-                    .filter(p -> p.getId() == personaId)
+                    .filter(p -> p.getPersonaId() == personaId)
                     .reduce((p, v) -> {
                         throw new IllegalStateException("No se ha encontrado un solo elemento");
                     });
@@ -53,12 +53,12 @@ public class PersonaServlet extends HttpServlet {
         persona.setNombres(nombres);
         persona.setFechaNacimiento(fechaNacimiento);
         
-        if(persona.getId() == 0) {
-            persona.setId(personas.size() + 1);
+        if(persona.getPersonaId() == 0) {
+            persona.setPersonaId(personas.size() + 1);
             personas.add(persona);
         } else {
             personas.stream().forEach(p -> {
-                if(p.getId() == persona.getId()) {
+                if(p.getPersonaId() == persona.getPersonaId()) {
                     p = persona;
                 }
             });
@@ -84,7 +84,7 @@ public class PersonaServlet extends HttpServlet {
                         .collect(Collectors.toList()).get(0);*/
 
                 Optional<Persona> optPersona = personas.stream()
-                        .filter(p -> p.getId() == id)
+                        .filter(p -> p.getPersonaId() == id)
                         .reduce((p, v) -> {
                             throw new IllegalStateException("No se ha encontrado un solo elemento");
                         });
@@ -98,7 +98,7 @@ public class PersonaServlet extends HttpServlet {
             case "eliminar":
                 id = Integer.parseInt(req.getParameter("id"));
                 personas = personas.stream()
-                        .filter(p -> p.getId() != id)
+                        .filter(p -> p.getPersonaId() != id)
                         .collect(Collectors.toList());
                 persona = new Persona();
                 break;

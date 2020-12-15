@@ -29,7 +29,7 @@ public class UsuarioRepository {
 
     public Usuario find(int id) {
         Optional<Usuario> optUsuario = usuarios.stream()
-                .filter(u -> u.getId() == id)
+                .filter(u -> u.getPersonaId() == id)
                 .reduce((u, v) -> {
                     throw new IllegalStateException("Se ha encontrado más de un elemento");
                 });
@@ -37,13 +37,13 @@ public class UsuarioRepository {
     }
 
     public Usuario save(Usuario usuario) {
-        if (usuario.getId() == 0) {
-            usuario.setId(usuarios.size() + 1);
+        if (usuario.getPersonaId() == 0) {
+            usuario.setPersonaId(usuarios.size() + 1);
             usuarios.add(usuario);
         } else {
             usuarios.stream()
                     .forEach(u -> {
-                        if (u.getId() == usuario.getId()) {
+                        if (u.getPersonaId() == usuario.getPersonaId()) {
                             u = usuario;
                         }
                     });

@@ -2,7 +2,7 @@ package pe.edu.idat.semana4.entity;
 
 public class Persona {
 
-    private int id;
+    private int personaId;
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String nombres;
@@ -12,20 +12,20 @@ public class Persona {
 
     }
 
-    public Persona(int id, String apellidoPaterno, String apellidoMaterno, String nombres, String fechaNacimiento) {
-        this.id = id;
+    public Persona(int personaId, String apellidoPaterno, String apellidoMaterno, String nombres, String fechaNacimiento) {
+        this.personaId = personaId;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.nombres = nombres;
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public int getId() {
-        return id;
+    public int getPersonaId() {
+        return personaId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPersonaId(int personaId) {
+        this.personaId = personaId;
     }
 
     public String getApellidoPaterno() {

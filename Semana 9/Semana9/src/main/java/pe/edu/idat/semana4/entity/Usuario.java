@@ -1,7 +1,7 @@
 package pe.edu.idat.semana4.entity;
 
 public class Usuario extends Persona {
-
+    private int id;
     private String username;
     private String password;
     
@@ -9,11 +9,21 @@ public class Usuario extends Persona {
         
     }
 
-    public Usuario(int id, String apellidoPaterno, String apellidoMaterno, String nombres, String fechaNacimiento, String username, String password) {
-        super(id, apellidoPaterno, apellidoMaterno, nombres, fechaNacimiento);
+    public Usuario(int personaId, String apellidoPaterno, String apellidoMaterno, String nombres, String fechaNacimiento, String username, String password) {
+        super(personaId, apellidoPaterno, apellidoMaterno, nombres, fechaNacimiento);
         this.username = username;
         this.password = password;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
 
     public String getUsername() {
         return username;

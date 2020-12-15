@@ -3,12 +3,18 @@ package pe.edu.idat.semana4;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import pe.edu.idat.semana4.dao.DbConnection;
+import pe.edu.idat.semana4.dao.UsuarioDao;
 import pe.edu.idat.semana4.entity.Persona;
 import pe.edu.idat.semana4.entity.Usuario;
 import pe.edu.idat.semana4.repository.UsuarioRepository;
@@ -54,12 +60,18 @@ public class UsuarioServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        configResponse(resp);
-
-        Gson gson = new Gson();
-        String json = gson.toJson(repo.list());
-        PrintWriter pw = resp.getWriter();
-        pw.println(json);
+        try {
+            configResponse(resp);
+            
+            UsuarioDao dao = UsuarioDao.getInstance();
+            
+            Gson gson = new Gson();
+            String json = gson.toJson(dao.list());
+            PrintWriter pw = resp.getWriter();
+            pw.println(json);
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void configResponse(HttpServletResponse resp) {
