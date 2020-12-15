@@ -1,0 +1,5 @@
+pe\edu\idat\semana4\entity\Persona.class
+pe\edu\idat\semana4\entity\Usuario.class
+pe\edu\idat\semana4\PersonaServlet.class
+pe\edu\idat\semana4\UsuarioServlet.class
+pe\edu\idat\semana4\repository\UsuarioRepository.class

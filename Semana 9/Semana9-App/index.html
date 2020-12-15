@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>.:: Mantenimiento de Usuario ::.</title>
+    <!-- Estilos externos -->
+    <link rel="stylesheet" href="assets/bootstrap-4.5.3/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/toastr/toastr.css">
+</head>
+
+<body>
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">Formulario</div>
+                    <div class="card-body">
+                        <div class="row form-group">
+                            <label for="txtApellidoPaterno" class="col-form-label col-sm-3">Apellido Paterno:</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="apellidoPaterno" id="txtApellidoPaterno" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="txtApellidoMaterno" class="col-form-label col-sm-3">Apellido Materno:</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="apellidoMaterno" id="txtApellidoMaterno" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="txtNombres" class="col-form-label col-sm-3">Nombres:</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="nombres" id="txtNombres" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="txtFechaNacimiento" class="col-form-label col-sm-3">Fecha de Nacimiento:</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="fechaNacimiento" id="txtFechaNacimiento" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="txtUsername" class="col-form-label col-sm-3">Usuario:</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="username" id="txtUsername" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="txtPassword" class="col-form-label col-sm-3">Contraseña:</label>
+                            <div class="col-sm-4">
+                                <input type="password" name="password" id="txtPassword" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-9 offset-sm-3">
+                                <button id="btnGuardar" type="button" class="btn btn-sm btn-primary">Guardar</button>
+                                <button id="btnCancelar" type="button" class="btn btn-sm btn-light">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">Lista de Usuarios</div>
+                    <div class="card-body">
+                        <table id="tblUsuarios" class="table">
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Apellido Paterno</th>
+                                    <th>Apellido Materno</th>
+                                    <th>Nombres</th>
+                                    <th>Fecha de Nacimiento</th>
+                                    <th>Usuario</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts externos -->
+    <script src="assets/jquery/jquery-3.5.1.js"></script>
+    <script src="assets/bootstrap-4.5.3/js/bootstrap.js"></script>
+    <script src="assets/toastr/toastr.js"></script>
+    <!-- Scripts propios -->
+    <script src="js/index.js"></script>
+</body>
+
+</html>
