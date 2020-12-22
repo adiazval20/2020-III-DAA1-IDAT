@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,37 +25,47 @@ import pe.edu.idat.semana4.repository.UsuarioRepository;
 public class UsuarioServlet extends HttpServlet {
 
     private UsuarioRepository repo;
+    private UsuarioDao dao;
 
     @Override
     public void init() throws ServletException {
         repo = UsuarioRepository.getInstance();
+        dao = UsuarioDao.getInstance();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         configResponse(resp);
 
+        Map<String, Object> response = new HashMap<>();
+        response.put("rpta", 1);
+        response.put("msg", "ok");
+
         int id = Integer.parseInt(req.getParameter("id"));
-        Usuario usuario = repo.find(id);
-        
         String apellidoPaterno = req.getParameter("apellidoPaterno");
         String apellidoMaterno = req.getParameter("apellidoMaterno");
         String nombres = req.getParameter("nombres");
         String fechaNacimiento = req.getParameter("fechaNacimiento");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        
-        usuario.setApellidoPaterno(apellidoPaterno);
-        usuario.setApellidoMaterno(apellidoMaterno);
-        usuario.setNombres(nombres);
-        usuario.setFechaNacimiento(fechaNacimiento);
-        usuario.setUsername(username);
-        usuario.setPassword(password);
-        
-        usuario = repo.save(usuario);
-        
+
+        Usuario usuario;
+        try {
+            usuario = dao.find(id);
+            usuario.setApellidoPaterno(apellidoPaterno);
+            usuario.setApellidoMaterno(apellidoMaterno);
+            usuario.setNombres(nombres);
+            usuario.setFechaNacimiento(fechaNacimiento);
+            usuario.setUsername(username);
+            usuario.setPassword(password);
+            usuario = repo.save(usuario);
+            response.put("data", usuario);
+        } catch (SQLException ex) {
+            response.put("msg", ex.getMessage());
+        }
+
         Gson gson = new Gson();
-        String json = gson.toJson(usuario);
+        String json = gson.toJson(response);
         PrintWriter pw = resp.getWriter();
         pw.println(json);
     }
@@ -62,9 +74,7 @@ public class UsuarioServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             configResponse(resp);
-            
-            UsuarioDao dao = UsuarioDao.getInstance();
-            
+
             Gson gson = new Gson();
             String json = gson.toJson(dao.list());
             PrintWriter pw = resp.getWriter();
