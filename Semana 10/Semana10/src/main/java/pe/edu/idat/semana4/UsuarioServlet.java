@@ -58,7 +58,7 @@ public class UsuarioServlet extends HttpServlet {
             usuario.setFechaNacimiento(fechaNacimiento);
             usuario.setUsername(username);
             usuario.setPassword(password);
-            usuario = repo.save(usuario);
+            usuario = dao.save(usuario);
             response.put("data", usuario);
         } catch (SQLException ex) {
             response.put("msg", ex.getMessage());

@@ -55,7 +55,7 @@ public class UsuarioDao {
 
     public Usuario save(Usuario usuario) throws SQLException {
         PreparedStatement stm;
-        int id;
+        ResultSet gk;
 
         if (usuario.getPersonaId() == 0) {
             stm = cnx.prepareStatement(
@@ -65,9 +65,12 @@ public class UsuarioDao {
             stm.setString(2, usuario.getApellidoMaterno());
             stm.setString(3, usuario.getNombres());
             stm.setString(4, usuario.getFechaNacimiento());
-
-            id = stm.executeUpdate();
-            usuario.setPersonaId(id);
+            stm.execute();
+            
+            gk = stm.getGeneratedKeys();
+            while (gk.next()) {
+                usuario.setPersonaId(gk.getInt(1));
+            }
         } else {
         }
 
@@ -77,9 +80,12 @@ public class UsuarioDao {
             stm.setString(1, usuario.getUsername());
             stm.setString(2, usuario.getPassword());
             stm.setInt(3, usuario.getPersonaId());
-
-            id = stm.executeUpdate();
-            usuario.setId(id);
+            stm.execute();
+            
+            gk = stm.getGeneratedKeys();
+            while (gk.next()) {
+                usuario.setId(gk.getInt(1));
+            }
         } else {
         }
         return usuario;

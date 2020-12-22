@@ -14,6 +14,8 @@ function listar() {
         url: path,
         success: function (response) {
             $tbody = $('#tblUsuarios tbody');
+            $tbody.empty();
+
             response.forEach((p, i) => {
                 var tr = '<tr>';
                 tr += '<td>' + (i + 1) + '</td>';
@@ -45,8 +47,6 @@ function guardar() {
         password: $('#txtPassword').val(),
     }
 
-    console.log(usuario);
-
     $.ajax({
         type: "POST",
         url: path,
@@ -55,6 +55,16 @@ function guardar() {
         success: function (response) {
             toastr.success("Registro guardado correctamente");
             listar();
+            limpiarForm();
         }
     });
+}
+
+function limpiarForm() {
+    $('#txtApellidoPaterno').val('');
+    $('#txtApellidoMaterno').val('');
+    $('#txtNombres').val('');
+    $('#txtFechaNacimiento').val('');
+    $('#txtUsername').val('');
+    $('#txtPassword').val('');
 }
