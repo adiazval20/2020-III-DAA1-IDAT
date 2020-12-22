@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,16 +73,30 @@ public class UsuarioServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            configResponse(resp);
+        configResponse(resp);
+        
+        Gson gson = new Gson();
+        Map<String, Object> response = new HashMap<>();
+        response.put("rpta", 1);
+        response.put("msg", "ok");
 
-            Gson gson = new Gson();
-            String json = gson.toJson(dao.list());
-            PrintWriter pw = resp.getWriter();
-            pw.println(json);
+        try {
+            if (req.getParameter("id") != null) {
+                int id = Integer.parseInt(req.getParameter("id"));
+                Usuario usuario = dao.find(id);
+                response.put("data", usuario);
+            } else {
+                List<Usuario> usuarios = dao.list();
+                response.put("data", usuarios);
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+            response.put("rpta", -1);
+            response.put("msg", ex.getMessage());
         }
+
+        String json = gson.toJson(response);
+        PrintWriter pw = resp.getWriter();
+        pw.println(json);
     }
 
     private void configResponse(HttpServletResponse resp) {

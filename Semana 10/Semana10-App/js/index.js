@@ -6,6 +6,10 @@ $(document).ready(function () {
     $('#btnGuardar').on('click', function (e) {
         guardar();
     });
+
+    $('body').on('click', 'button.btn', function (e) {
+        var id = $(this).data('id');
+    });
 });
 
 function listar() {
