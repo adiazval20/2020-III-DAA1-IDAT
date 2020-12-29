@@ -7,6 +7,10 @@ $(document).ready(function () {
         guardar();
     });
 
+    $('#btnCancelar').on('click', function (e) {
+        limpiarForm();
+    });
+
     $('body').on('click', 'button.editar', function (e) {
         var id = $(this).data('id');
         obtenerUsuario(id);
@@ -71,6 +75,7 @@ function guardar() {
 }
 
 function limpiarForm() {
+    $('#hddId').val('');
     $('#txtApellidoPaterno').val('');
     $('#txtApellidoMaterno').val('');
     $('#txtNombres').val('');
