@@ -83,6 +83,7 @@ public class UsuarioServlet extends HttpServlet {
         try {
             if (req.getParameter("id") != null) {
                 int id = Integer.parseInt(req.getParameter("id"));
+                Usuario usuario = dao.find(id);
 
                 String accion = req.getParameter("accion");
                 if (accion == null) {
@@ -90,7 +91,7 @@ public class UsuarioServlet extends HttpServlet {
                 }
 
                 if (accion.equals("eliminar")) {
-                    boolean responseDelete = dao.delete(id);
+                    boolean responseDelete = dao.delete(usuario);
                     response.put("data", responseDelete);
                     if (responseDelete) {
                         response.put("msg", "Usuario eliminado correctamente");
@@ -98,7 +99,7 @@ public class UsuarioServlet extends HttpServlet {
                         response.put("msg", "No se pudo eliminar el usuario");
                     }
                 } else {
-                    Usuario usuario = dao.find(id);
+                    
                     response.put("data", usuario);
                 }
 

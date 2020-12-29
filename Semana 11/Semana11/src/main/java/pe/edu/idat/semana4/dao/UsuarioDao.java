@@ -125,10 +125,14 @@ public class UsuarioDao {
         return usuario;
     }
     
-    public boolean delete(int id) throws SQLException {
+    public boolean delete(Usuario usuario) throws SQLException {
         PreparedStatement stm = cnx.prepareStatement("DELETE FROM Usuario WHERE id = ?");
-        stm.setInt(1, id);
+        stm.setInt(1, usuario.getId());
         stm.execute();
+        
+        stm = cnx.prepareStatement("DELETE FROM Persona WHERE id = ?");
+        stm.setInt(1, usuario.getPersonaId());
+        
         return true;
     }
 }

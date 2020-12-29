@@ -110,8 +110,18 @@ function eliminar(valId) {
             id: valId
         },
         success: function (response) {
-            console.log(response);
-            listar();
+            switch (response.rpta) {
+                case -1:
+                    toastr.danger(response.msg, "Respuesta");
+                    break;
+                case 0:
+                    toastr.warning(response.msg, "Respuesta");
+                    break;
+                case 1:
+                    toastr.success(response.msg, "Respuesta");
+                    listar();
+                    break;
+            }
         }
     });
 }
