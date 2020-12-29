@@ -14,7 +14,7 @@ $(document).ready(function () {
 
     $('body').on('click', 'button.eliminar', function (e) {
         var id = $(this).data('id');
-        // eliminar(id);
+        eliminar(id);
     })
 });
 

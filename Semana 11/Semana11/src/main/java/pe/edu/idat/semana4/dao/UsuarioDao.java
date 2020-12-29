@@ -124,4 +124,11 @@ public class UsuarioDao {
         
         return usuario;
     }
+    
+    public boolean delete(int id) throws SQLException {
+        PreparedStatement stm = cnx.prepareStatement("DELETE FROM Usuario WHERE id = ?");
+        stm.setInt(1, id);
+        stm.execute();
+        return true;
+    }
 }

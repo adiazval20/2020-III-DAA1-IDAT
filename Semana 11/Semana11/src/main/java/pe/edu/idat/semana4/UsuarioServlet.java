@@ -74,17 +74,34 @@ public class UsuarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         configResponse(resp);
-        
+
         Gson gson = new Gson();
         Map<String, Object> response = new HashMap<>();
         response.put("rpta", 1);
         response.put("msg", "ok");
-        
+
         try {
             if (req.getParameter("id") != null) {
                 int id = Integer.parseInt(req.getParameter("id"));
-                Usuario usuario = dao.find(id);
-                response.put("data", usuario);
+
+                String accion = req.getParameter("accion");
+                if (accion == null) {
+                    accion = "";
+                }
+
+                if (accion.equals("eliminar")) {
+                    boolean responseDelete = dao.delete(id);
+                    response.put("data", responseDelete);
+                    if (responseDelete) {
+                        response.put("msg", "Usuario eliminado correctamente");
+                    } else {
+                        response.put("msg", "No se pudo eliminar el usuario");
+                    }
+                } else {
+                    Usuario usuario = dao.find(id);
+                    response.put("data", usuario);
+                }
+
             } else {
                 List<Usuario> usuarios = dao.list();
                 response.put("data", usuarios);
