@@ -79,7 +79,7 @@ public class UsuarioServlet extends HttpServlet {
         Map<String, Object> response = new HashMap<>();
         response.put("rpta", 1);
         response.put("msg", "ok");
-
+        
         try {
             if (req.getParameter("id") != null) {
                 int id = Integer.parseInt(req.getParameter("id"));

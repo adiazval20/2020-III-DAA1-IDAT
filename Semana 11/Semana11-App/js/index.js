@@ -9,6 +9,7 @@ $(document).ready(function () {
 
     $('body').on('click', 'button.btn', function (e) {
         var id = $(this).data('id');
+        editar(id);
     });
 });
 
@@ -20,17 +21,19 @@ function listar() {
             $tbody = $('#tblUsuarios tbody');
             $tbody.empty();
 
-            response.forEach((p, i) => {
+            console.log(response);
+
+            response.data.forEach((u, i) => {
                 var tr = '<tr>';
                 tr += '<td>' + (i + 1) + '</td>';
-                tr += '<td>' + p.apellidoPaterno + '</td>';
-                tr += '<td>' + p.apellidoMaterno + '</td>';
-                tr += '<td>' + p.nombres + '</td>';
-                tr += '<td>' + p.fechaNacimiento + '</td>';
-                tr += '<td>' + p.username + '</td>';
+                tr += '<td>' + u.apellidoPaterno + '</td>';
+                tr += '<td>' + u.apellidoMaterno + '</td>';
+                tr += '<td>' + u.nombres + '</td>';
+                tr += '<td>' + u.fechaNacimiento + '</td>';
+                tr += '<td>' + u.username + '</td>';
                 tr += '<td>';
-                tr += '<button class="btn btn-sm btn-primary" data-id="' + p.id + '">Editar</button>';
-                tr += '<button class="btn btn-sm btn-danger ml-2" data-id="' + p.id + '">Eliminar</button>';
+                tr += '<button class="btn btn-sm btn-primary" data-id="' + u.id + '">Editar</button>';
+                tr += '<button class="btn btn-sm btn-danger ml-2" data-id="' + u.id + '">Eliminar</button>';
                 tr += '</td>';
                 tr += '</tr>';
                 $tbody.append(tr);
@@ -71,4 +74,25 @@ function limpiarForm() {
     $('#txtFechaNacimiento').val('');
     $('#txtUsername').val('');
     $('#txtPassword').val('');
+}
+
+function editar(valId) {
+    $.ajax({
+        type: "GET",
+        url: path,
+        data: {
+            id: valId
+        },
+        success: function (response) {
+            $tbody = $(' #card-body');
+
+            var u = response.data;
+            $('#txtApellidoPaterno').val(u.apellidoPaterno);
+            $('#txtApellidoMaterno').val(u.apellidoMaterno);
+            $('#txtNombres').val(u.nombres);
+            $('#txtFechaNacimiento').val(u.fechaNacimiento);
+            $('#txtUsername').val(u.username);
+            $('#txtPassword').val(u.password);
+        }
+    });
 }
