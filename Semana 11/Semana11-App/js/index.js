@@ -9,7 +9,7 @@ $(document).ready(function () {
 
     $('body').on('click', 'button.btn', function (e) {
         var id = $(this).data('id');
-        editar(id);
+        obtenerUsuario(id);
     });
 });
 
@@ -43,9 +43,10 @@ function listar() {
 }
 
 function guardar() {
-    var id = 0;
+    var valId = $('#hddId').val();
+    debugger;
     var usuario = {
-        id: id,
+        id: (valId == '' ? 0 : valId),
         apellidoPaterno: $('#txtApellidoPaterno').val(),
         apellidoMaterno: $('#txtApellidoMaterno').val(),
         nombres: $('#txtNombres').val(),
@@ -76,7 +77,7 @@ function limpiarForm() {
     $('#txtPassword').val('');
 }
 
-function editar(valId) {
+function obtenerUsuario(valId) {
     $.ajax({
         type: "GET",
         url: path,
@@ -87,6 +88,7 @@ function editar(valId) {
             $tbody = $(' #card-body');
 
             var u = response.data;
+            $('#hddId').val(u.id);
             $('#txtApellidoPaterno').val(u.apellidoPaterno);
             $('#txtApellidoMaterno').val(u.apellidoMaterno);
             $('#txtNombres').val(u.nombres);

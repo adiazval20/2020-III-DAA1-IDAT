@@ -72,6 +72,14 @@ public class UsuarioDao {
                 usuario.setPersonaId(gk.getInt(1));
             }
         } else {
+            stm = cnx.prepareStatement("UPDATE Persona SET apellido_paterno = ?, apellido_materno = ?, nombres = ?, fecha_nacimiento = ? WHERE id = ?");
+            stm.setString(1, usuario.getApellidoPaterno());
+            stm.setString(2, usuario.getApellidoMaterno());
+            stm.setString(3, usuario.getNombres());
+            stm.setString(4, usuario.getFechaNacimiento());
+            stm.setInt(5, usuario.getPersonaId());
+            
+            stm.execute();
         }
 
         if (usuario.getId() == 0) {
@@ -87,6 +95,11 @@ public class UsuarioDao {
                 usuario.setId(gk.getInt(1));
             }
         } else {
+            stm = cnx.prepareStatement("UPDATE Usuario SET username = ?, password = ? WHERE id = ?");
+            stm.setString(1, usuario.getUsername());
+            stm.setString(2, usuario.getPassword());
+            stm.setInt(3, usuario.getId());
+            stm.execute();
         }
         return usuario;
     }
