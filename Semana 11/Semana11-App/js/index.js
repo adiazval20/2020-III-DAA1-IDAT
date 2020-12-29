@@ -7,10 +7,15 @@ $(document).ready(function () {
         guardar();
     });
 
-    $('body').on('click', 'button.btn', function (e) {
+    $('body').on('click', 'button.editar', function (e) {
         var id = $(this).data('id');
         obtenerUsuario(id);
     });
+
+    $('body').on('click', 'button.eliminar', function (e) {
+        var id = $(this).data('id');
+        // eliminar(id);
+    })
 });
 
 function listar() {
@@ -21,8 +26,6 @@ function listar() {
             $tbody = $('#tblUsuarios tbody');
             $tbody.empty();
 
-            console.log(response);
-
             response.data.forEach((u, i) => {
                 var tr = '<tr>';
                 tr += '<td>' + (i + 1) + '</td>';
@@ -32,8 +35,8 @@ function listar() {
                 tr += '<td>' + u.fechaNacimiento + '</td>';
                 tr += '<td>' + u.username + '</td>';
                 tr += '<td>';
-                tr += '<button class="btn btn-sm btn-primary" data-id="' + u.id + '">Editar</button>';
-                tr += '<button class="btn btn-sm btn-danger ml-2" data-id="' + u.id + '">Eliminar</button>';
+                tr += '<button class="btn btn-sm btn-primary editar" data-id="' + u.id + '">Editar</button>';
+                tr += '<button class="btn btn-sm btn-danger ml-2 eliminar" data-id="' + u.id + '">Eliminar</button>';
                 tr += '</td>';
                 tr += '</tr>';
                 $tbody.append(tr);
@@ -44,7 +47,6 @@ function listar() {
 
 function guardar() {
     var valId = $('#hddId').val();
-    debugger;
     var usuario = {
         id: (valId == '' ? 0 : valId),
         apellidoPaterno: $('#txtApellidoPaterno').val(),
@@ -95,6 +97,21 @@ function obtenerUsuario(valId) {
             $('#txtFechaNacimiento').val(u.fechaNacimiento);
             $('#txtUsername').val(u.username);
             $('#txtPassword').val(u.password);
+        }
+    });
+}
+
+function eliminar(valId) {
+    $.ajax({
+        type: "GET",
+        url: path,
+        data: {
+            accion: "eliminar",
+            id: valId
+        },
+        success: function (response) {
+            console.log(response);
+            listar();
         }
     });
 }
