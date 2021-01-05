@@ -104,8 +104,7 @@ public class UsuarioServlet extends HttpServlet {
                 }
 
             } else {
-                List<Usuario> usuarios = dao.list();
-                response.put("data", usuarios);
+                response.put("data", dao.listSp());
             }
         } catch (SQLException ex) {
             response.put("rpta", -1);

@@ -52,6 +52,44 @@ public class UsuarioDao {
 
         return usuarios;
     }
+    
+    public List<Usuario> listSp() throws SQLException {
+        List<Usuario> usuarios = new ArrayList<>();
+        
+        //CTRL + SHIFT + C
+
+//        String query = "SELECT u.id, u.username, u.password, u.persona_id, p.apellido_paterno, "
+//                + "p.apellido_materno, p.nombres, p.fecha_nacimiento "
+//                + "FROM usuario u JOIN persona p ON u.persona_id = p.id";
+//
+//        PreparedStatement stm = cnx.prepareStatement(query);
+        
+        PreparedStatement stm = cnx.prepareCall("{CALL usuario_listar(?,?,?,?,?)}");
+        stm.setString(1, "UP");
+        stm.setInt(2, 0);
+        stm.setString(3, "");
+        stm.setString(4, "");
+        stm.setInt(5, 0);
+
+        ResultSet rs = stm.executeQuery();
+
+        Usuario usuario;
+        while (rs.next()) {
+            usuario = new Usuario();
+            usuario.setId(rs.getInt("id"));
+            usuario.setUsername(rs.getString("username"));
+            usuario.setPassword(rs.getString("password"));
+            usuario.setPersonaId(rs.getInt("persona_id"));
+            usuario.setApellidoPaterno(rs.getString("apellido_paterno"));
+            usuario.setApellidoMaterno(rs.getString("apellido_materno"));
+            usuario.setNombres(rs.getString("nombres"));
+            usuario.setFechaNacimiento(rs.getString("fecha_nacimiento"));
+
+            usuarios.add(usuario);
+        }
+
+        return usuarios;
+    }
 
     public Usuario save(Usuario usuario) throws SQLException {
         PreparedStatement stm;
