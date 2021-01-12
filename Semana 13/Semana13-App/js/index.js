@@ -115,9 +115,10 @@ function eliminar(valId) {
             id: valId
         },
         success: function (response) {
+            console.log(toastr);
             switch (response.rpta) {
                 case -1:
-                    toastr.danger(response.msg, "Respuesta");
+                    toastr.error(response.msg, "Respuesta");
                     break;
                 case 0:
                     toastr.warning(response.msg, "Respuesta");
