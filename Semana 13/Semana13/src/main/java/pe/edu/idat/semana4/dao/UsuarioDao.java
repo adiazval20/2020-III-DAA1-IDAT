@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import pe.edu.idat.semana4.entity.Persona;
 import pe.edu.idat.semana4.entity.Usuario;
 
 public class UsuarioDao {
@@ -92,43 +93,17 @@ public class UsuarioDao {
     }
 
     public Usuario save(Usuario usuario) throws Exception {
-        PreparedStatement stm;
-        CallableStatement cStm;
-        ResultSet gk;
-
-        cnx.setAutoCommit(false);
+        String tipoOperacion;
 
         try {
-            if (usuario.getPersonaId() == 0) {
-                stm = cnx.prepareStatement(
-                        "INSERT INTO Persona (apellido_paterno, apellido_materno, nombres, fecha_nacimiento)"
-                        + " VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-                stm.setString(1, usuario.getApellidoPaterno());
-                stm.setString(2, usuario.getApellidoMaterno());
-                stm.setString(3, usuario.getNombres());
-                stm.setString(4, usuario.getFechaNacimiento());
-                stm.execute();
-
-                gk = stm.getGeneratedKeys();
-                while (gk.next()) {
-                    usuario.setPersonaId(gk.getInt(1));
-                }
-            } else {
-                stm = cnx.prepareStatement("UPDATE Persona SET apellido_paterno = ?, apellido_materno = ?, nombres = ?, fecha_nacimiento = ? WHERE id = ?");
-                stm.setString(1, usuario.getApellidoPaterno());
-                stm.setString(2, usuario.getApellidoMaterno());
-                stm.setString(3, usuario.getNombres());
-                stm.setString(4, usuario.getFechaNacimiento());
-                stm.setInt(5, usuario.getPersonaId());
-
-                stm.execute();
-            }
-
-//            int numeroError = 5 / 0;
-
-            String tipoOperacion = (usuario.getId() == 0 ? "I" : "U");
-            usuarioIUD(usuario, tipoOperacion);
+            cnx.setAutoCommit(false);
             
+            tipoOperacion = (usuario.getPersonaId() == 0 ? "I" : "U");
+            personaIUD(usuario, tipoOperacion);
+            
+            tipoOperacion = (usuario.getId() == 0 ? "I" : "U");
+            usuarioIUD(usuario, tipoOperacion);
+
             cnx.commit();
         } catch (Exception ex) {
             cnx.rollback();
@@ -188,6 +163,25 @@ public class UsuarioDao {
         boolean resultado = cStm.execute();
         usuario.setId(cStm.getInt(8));
 
+        return resultado;
+    }
+
+    private boolean personaIUD(Persona persona, String tipoOperacion) throws SQLException {
+        CallableStatement stm = cnx.prepareCall("{CALL persona_IUD (?,?,?,?,?,?,?,?,?)}");
+        stm.setString(1, tipoOperacion);
+        stm.setInt(2, persona.getPersonaId());
+        stm.setString(3, persona.getApellidoPaterno());
+        stm.setString(4, persona.getApellidoMaterno());
+        stm.setString(5, persona.getNombres());
+        stm.setString(6, persona.getFechaNacimiento());
+        
+        stm.registerOutParameter(7, Types.INTEGER);
+        stm.registerOutParameter(8, Types.VARCHAR);
+        stm.registerOutParameter(9, Types.INTEGER);
+        
+        boolean resultado = stm.execute();
+        persona.setPersonaId(stm.getInt(9));
+        
         return resultado;
     }
 }
