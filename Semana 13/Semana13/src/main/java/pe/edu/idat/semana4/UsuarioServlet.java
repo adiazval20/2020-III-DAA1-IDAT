@@ -55,6 +55,10 @@ public class UsuarioServlet extends HttpServlet {
             usuario = dao.save(usuario);
             response.put("data", usuario);
         } catch (SQLException ex) {
+            response.put("rpta", -1);
+            response.put("msg", ex.getMessage());
+        } catch (Exception ex) {
+            response.put("rpta", -1);
             response.put("msg", ex.getMessage());
         }
 
@@ -92,7 +96,7 @@ public class UsuarioServlet extends HttpServlet {
                         response.put("msg", "No se pudo eliminar el usuario");
                     }
                 } else {
-                    
+
                     response.put("data", usuario);
                 }
 

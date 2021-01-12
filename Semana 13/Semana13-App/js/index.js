@@ -67,9 +67,19 @@ function guardar() {
         data: usuario,
         dataType: "json",
         success: function (response) {
-            toastr.success("Registro guardado correctamente");
-            listar();
-            limpiarForm();
+            switch (response.rpta) {
+                case -1:
+                    toastr.error(response.msg, "Error");
+                    break;
+                case 0:
+                    toastr.warning(response.msg, "Advertencia");
+                    break;
+                case 1:
+                    toastr.success(response.msg, "Respuesta");
+                    limpiarForm();
+                    listar();
+                    break;
+            }
         }
     });
 }
@@ -115,7 +125,6 @@ function eliminar(valId) {
             id: valId
         },
         success: function (response) {
-            console.log(toastr);
             switch (response.rpta) {
                 case -1:
                     toastr.error(response.msg, "Respuesta");

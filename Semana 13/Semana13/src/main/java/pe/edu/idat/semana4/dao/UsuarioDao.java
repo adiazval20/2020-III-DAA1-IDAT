@@ -91,38 +91,52 @@ public class UsuarioDao {
         return usuarios;
     }
 
-    public Usuario save(Usuario usuario) throws SQLException {
+    public Usuario save(Usuario usuario) throws Exception {
         PreparedStatement stm;
         CallableStatement cStm;
         ResultSet gk;
 
-        if (usuario.getPersonaId() == 0) {
-            stm = cnx.prepareStatement(
-                    "INSERT INTO Persona (apellido_paterno, apellido_materno, nombres, fecha_nacimiento)"
-                    + " VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-            stm.setString(1, usuario.getApellidoPaterno());
-            stm.setString(2, usuario.getApellidoMaterno());
-            stm.setString(3, usuario.getNombres());
-            stm.setString(4, usuario.getFechaNacimiento());
-            stm.execute();
+        cnx.setAutoCommit(false);
 
-            gk = stm.getGeneratedKeys();
-            while (gk.next()) {
-                usuario.setPersonaId(gk.getInt(1));
+        try {
+            if (usuario.getPersonaId() == 0) {
+                stm = cnx.prepareStatement(
+                        "INSERT INTO Persona (apellido_paterno, apellido_materno, nombres, fecha_nacimiento)"
+                        + " VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                stm.setString(1, usuario.getApellidoPaterno());
+                stm.setString(2, usuario.getApellidoMaterno());
+                stm.setString(3, usuario.getNombres());
+                stm.setString(4, usuario.getFechaNacimiento());
+                stm.execute();
+
+                gk = stm.getGeneratedKeys();
+                while (gk.next()) {
+                    usuario.setPersonaId(gk.getInt(1));
+                }
+            } else {
+                stm = cnx.prepareStatement("UPDATE Persona SET apellido_paterno = ?, apellido_materno = ?, nombres = ?, fecha_nacimiento = ? WHERE id = ?");
+                stm.setString(1, usuario.getApellidoPaterno());
+                stm.setString(2, usuario.getApellidoMaterno());
+                stm.setString(3, usuario.getNombres());
+                stm.setString(4, usuario.getFechaNacimiento());
+                stm.setInt(5, usuario.getPersonaId());
+
+                stm.execute();
             }
-        } else {
-            stm = cnx.prepareStatement("UPDATE Persona SET apellido_paterno = ?, apellido_materno = ?, nombres = ?, fecha_nacimiento = ? WHERE id = ?");
-            stm.setString(1, usuario.getApellidoPaterno());
-            stm.setString(2, usuario.getApellidoMaterno());
-            stm.setString(3, usuario.getNombres());
-            stm.setString(4, usuario.getFechaNacimiento());
-            stm.setInt(5, usuario.getPersonaId());
 
-            stm.execute();
+//            int numeroError = 5 / 0;
+
+            String tipoOperacion = (usuario.getId() == 0 ? "I" : "U");
+            usuarioIUD(usuario, tipoOperacion);
+            
+            cnx.commit();
+        } catch (Exception ex) {
+            cnx.rollback();
+            throw ex;
+        } finally {
+            cnx.setAutoCommit(true);
         }
-        
-        String tipoOperacion = (usuario.getId() == 0 ? "I" : "U");
-        usuarioIUD(usuario, tipoOperacion);
+
         return usuario;
     }
 
@@ -149,7 +163,7 @@ public class UsuarioDao {
 
     public boolean delete(Usuario usuario) throws SQLException {
         PreparedStatement stm;
-                
+
         usuarioIUD(usuario, "D");
 
         stm = cnx.prepareStatement("DELETE FROM Persona WHERE id = ?");
@@ -157,10 +171,10 @@ public class UsuarioDao {
 
         return true;
     }
-    
+
     private boolean usuarioIUD(Usuario usuario, String tipoOperacion) throws SQLException {
         CallableStatement cStm = cnx.prepareCall("{CALL usuario_IUD (?,?,?,?,?,?,?,?)}");
-        
+
         cStm.setString(1, tipoOperacion);
         cStm.setInt(2, usuario.getId());
         cStm.setString(3, usuario.getUsername());
@@ -170,10 +184,10 @@ public class UsuarioDao {
         cStm.registerOutParameter(6, Types.INTEGER);
         cStm.registerOutParameter(7, Types.VARCHAR);
         cStm.registerOutParameter(8, Types.INTEGER);
-        
+
         boolean resultado = cStm.execute();
         usuario.setId(cStm.getInt(8));
-        
+
         return resultado;
     }
 }
