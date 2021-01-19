@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
-    @Query("SELECT u FROM Usuario u WHERE u.username = :username AND u.password = :password")
+    @Query("SELECT u FROM Usuario u WHERE u.username = :username AND u.password = :password AND u.eliminado = false")
     Usuario login(@Param("username") String username, @Param("password") String password);
 }
