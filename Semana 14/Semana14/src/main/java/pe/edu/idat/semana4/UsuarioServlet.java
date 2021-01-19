@@ -106,6 +106,9 @@ public class UsuarioServlet extends HttpServlet {
         } catch (SQLException ex) {
             response.put("rpta", -1);
             response.put("msg", ex.getMessage());
+        } catch (NullPointerException ex) {
+            response.put("rpta", -1);
+            response.put("msg", "Error nullpointer!!");
         }
 
         String json = gson.toJson(response);

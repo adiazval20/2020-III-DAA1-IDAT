@@ -85,6 +85,8 @@ function guardar() {
 }
 
 function limpiarForm() {
+    $('#tabla tr:first-child td:first-child').html('1');
+
     $('#hddId').val('');
     $('#txtApellidoPaterno').val('');
     $('#txtApellidoMaterno').val('');
